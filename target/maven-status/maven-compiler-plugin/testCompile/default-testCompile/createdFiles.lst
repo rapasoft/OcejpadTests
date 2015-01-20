@@ -1,0 +1,7 @@
+sk\erni\rap\jpa\test\InheritanceTest.class
+sk\erni\rap\jpa\test\ManyToManyRelationTest.class
+sk\erni\rap\jpa\test\ElementCollectionTest.class
+sk\erni\rap\jpa\test\CriteriaQueryTest.class
+sk\erni\rap\jpa\test\AddAndRetrieveUserTest.class
+sk\erni\rap\jpa\test\NamedQueryTest.class
+sk\erni\rap\jpa\test\ElementCollectionMapTest.class

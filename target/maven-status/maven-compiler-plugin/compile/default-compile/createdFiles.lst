@@ -1,0 +1,12 @@
+sk\erni\rap\jpa\model\GuestUser.class
+sk\erni\rap\jpa\util\ContextUtils.class
+sk\erni\rap\jpa\model\AdminUser_.class
+sk\erni\rap\jpa\model\Process_.class
+sk\erni\rap\jpa\model\Role.class
+sk\erni\rap\jpa\model\Role_.class
+sk\erni\rap\jpa\model\Process.class
+sk\erni\rap\jpa\model\User.class
+sk\erni\rap\jpa\dao\UserDao.class
+sk\erni\rap\jpa\model\User_.class
+sk\erni\rap\jpa\model\AdminUser.class
+sk\erni\rap\jpa\model\GuestUser_.class
