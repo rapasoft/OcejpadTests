@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="JpaTest:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="jpaTest.war">
-      <element id="artifact" artifact-name="JpaTest:war exploded" />
-    </root>
-  </artifact>
-</component>
