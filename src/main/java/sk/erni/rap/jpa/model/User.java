@@ -7,7 +7,7 @@ import java.util.*;
  * @author rap
  */
 @NamedQuery(
-		name ="User.findGuestsWithReaderRole",
+		name = "User.findGuestsWithReaderRole",
 		query = "select g from GuestUser g join g.roles r where r.name = 'writer'"
 )
 @SqlResultSetMapping(
@@ -18,18 +18,18 @@ import java.util.*;
 		},
 		entities = {
 				@EntityResult(entityClass = Role.class, fields = {
-						@FieldResult(name = "name" , column = "rolename"),
+						@FieldResult(name = "name", column = "rolename"),
 						@FieldResult(name = "description", column = "description")
 				})
 		}
 )
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorValue("U")
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
 	private String name;
@@ -38,10 +38,14 @@ public class User {
 
 	private String dateOfBirth;
 
+	@Column(name = "CREATION_DATE")
+	@Temporal(TemporalType.DATE)
+	private Date creationDate;
+
 	@ElementCollection
 	@CollectionTable(
-		name = "NICKNAME",
-		joinColumns = @JoinColumn(name = "USER_ID")
+			name = "NICKNAME",
+			joinColumns = @JoinColumn(name = "USER_ID")
 	)
 	private List<String> nickNames = new ArrayList<>();
 
@@ -49,7 +53,7 @@ public class User {
 	@MapKeyColumn(name = "PHONE_TYPE")
 	private Map<String, String> phoneNumbers = new TreeMap<>();
 
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
 	@JoinTable(
 			name = "USER_ROLE",
 			joinColumns = @JoinColumn(name = "USER_ID"),
@@ -70,6 +74,10 @@ public class User {
 	}
 
 	public User() {
+	}
+
+	public Date getCreationDate() {
+		return creationDate;
 	}
 
 	public String getDateOfBirth() {
