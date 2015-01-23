@@ -1,5 +1,6 @@
 package sk.erni.rap.jpa.util;
 
+import sk.erni.rap.jpa.dao.ProcessDao;
 import sk.erni.rap.jpa.dao.UserDao;
 
 import javax.ejb.embeddable.EJBContainer;
@@ -17,21 +18,29 @@ public class ContextUtils {
 		return EJBContainer.createEJBContainer().getContext();
 	}
 
-	public static UserDao lookupUserDao(Context context) {
+	@SuppressWarnings("unchecked")
+	public static <T> T lookup(Context context, Class<T> clazz) {
 		try {
-			return (UserDao) context.lookup("java:global/JpaTest/UserDao");
+			return (T) context.lookup("java:global/JpaTest/" + clazz.getSimpleName());
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 		throw new IllegalStateException();
 	}
 
+	public static UserDao lookupUserDao(Context context) {
+		return lookup(context, UserDao.class);
+	}
+
+	public static ProcessDao lookupProcessDao(Context context) {
+		return lookup(context, ProcessDao.class);
+	}
+
 	public static UserTransaction lookupUserTransaction() {
 		try {
 			return (UserTransaction) new InitialContext().lookup("java:comp/UserTransaction");
 		} catch (NamingException e) {
-			e.printStackTrace();
+			throw new IllegalStateException(e);
 		}
-		throw new IllegalStateException();
 	}
 }

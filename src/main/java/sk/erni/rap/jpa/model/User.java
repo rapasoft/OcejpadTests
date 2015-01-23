@@ -73,6 +73,10 @@ public class User {
 		this.dateOfBirth = dateOfBirth;
 	}
 
+	@OneToMany
+	@JoinColumn(name = "USER_ID")
+	public List<Process> processes;
+
 	public User() {
 	}
 

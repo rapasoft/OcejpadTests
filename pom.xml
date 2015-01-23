@@ -8,6 +8,13 @@
 	<artifactId>jpa</artifactId>
 	<version>1.0-SNAPSHOT</version>
 
+	<packaging>war</packaging>
+
+	<properties>
+		<dataSource>java:jboss/datasources/ExampleDS</dataSource>
+		<hsqlGeneratedPath>jdbc:hsqldb:target/db/test;shutdown=true</hsqlGeneratedPath>
+	</properties>
+
 	<dependencies>
 
 		<dependency>
@@ -58,8 +65,24 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+
 		<finalName>jpaTest</finalName>
 		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -95,9 +118,9 @@
 				<configuration>
 					<driverClassName>org.hsqldb.jdbcDriver</driverClassName>
 					<hibernateDialect>org.hibernate.dialect.HSQLDialect</hibernateDialect>
-					<url><![CDATA[jdbc:hsqldb:target/db/test;shutdown=true]]></url>
+					<url><![CDATA[${hsqlGeneratedPath}]]></url>
 					<username>sa</username>
-					<password></password>
+					<password/>
 				</configuration>
 			</plugin>
 
