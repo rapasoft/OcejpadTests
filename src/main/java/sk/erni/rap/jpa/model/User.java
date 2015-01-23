@@ -73,9 +73,10 @@ public class User {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "USER_ID")
-	public List<Process> processes;
+	@MapKey(name = "value")
+	private Map<String, Process> processes = new HashMap<>();
 
 	public User() {
 	}
@@ -112,6 +113,10 @@ public class User {
 		return roleValidToDates;
 	}
 
+	public Map<String, Process> getProcesses() {
+		return processes;
+	}
+
 	public void addRole(Role role) {
 		roles.add(role);
 	}
@@ -128,4 +133,5 @@ public class User {
 	public void addPhoneNumber(String type, String phoneNumber) {
 		phoneNumbers.put(type, phoneNumber);
 	}
+
 }

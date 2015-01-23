@@ -12,7 +12,7 @@ import javax.ws.rs.Produces;
 /**
  * @author rap
  *         <p/>
- *         This is a simple webservice to test the
+ *         This is a simple webservice to test the ProcessDao
  *         <p/>
  *         Test path: http://localhost:8080/jpaTest/rs/process
  */

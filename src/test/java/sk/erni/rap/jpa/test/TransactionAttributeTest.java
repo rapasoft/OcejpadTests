@@ -4,8 +4,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import sk.erni.rap.jpa.dao.ProcessDao;
+import sk.erni.rap.jpa.dao.UserDao;
 import sk.erni.rap.jpa.model.Process;
 import sk.erni.rap.jpa.model.ProcessAttribute;
+import sk.erni.rap.jpa.model.User;
 import sk.erni.rap.jpa.util.ContextUtils;
 
 import javax.ejb.EJBException;
@@ -13,6 +15,7 @@ import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.transaction.NotSupportedException;
 import javax.transaction.SystemException;
+import java.util.List;
 
 /**
  * @author rap
@@ -21,10 +24,13 @@ public class TransactionAttributeTest {
 
 	private ProcessDao processDao;
 
+	private UserDao userDao;
+
 	@Before
 	public void init() throws NamingException {
 		Context context = ContextUtils.createContext();
 		processDao = ContextUtils.lookupProcessDao(context);
+		userDao = ContextUtils.lookupUserDao(context);
 	}
 
 	@Test
@@ -76,6 +82,21 @@ public class TransactionAttributeTest {
 		processDao.addProcessAttributeWithoutCheck(process, processAttribute1);
 		processDao.addProcessAttributeWithoutCheck(process, processAttribute2);
 
+	}
+
+	@Test
+	public void testMapKey() {
+		User user = new User("Test", "test", "test");
+
+		Process process = new Process();
+		process.setValue("Calibrate Fuse");
+		process.setUser(user);
+
+		processDao.save(process);
+
+		List<User> userList = userDao.findByFirstName("Test");
+
+		Assert.assertEquals(1, userList.get(0).getProcesses().size());
 	}
 
 }

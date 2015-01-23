@@ -8,6 +8,7 @@ import java.util.List;
  * @author rap
  */
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(name = "UNIQUE_VALUE", columnNames = "VALUE"))
 public class Process {
 
 	@Id
@@ -21,6 +22,10 @@ public class Process {
 	@CollectionTable(name = "PROCESS_ATTRIBUTES", joinColumns = @JoinColumn(name = "PROCESS_ID"))
 	private List<ProcessAttribute> processAttributes = new ArrayList<>();
 
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	private User user;
+
+	@Column(unique = true)
 	private String value;
 
 	public String getValue() {
@@ -33,6 +38,14 @@ public class Process {
 
 	public Integer getId() {
 		return id;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public int getVersion() {
@@ -49,7 +62,7 @@ public class Process {
 
 	@PrePersist
 	public void logPrePersist() {
-		System.out.println("PerPresist " + getProcessAttributes());
+		System.out.println("PrePresist " + getProcessAttributes());
 	}
 
 	@PreUpdate
