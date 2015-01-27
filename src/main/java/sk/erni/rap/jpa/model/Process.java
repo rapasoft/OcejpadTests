@@ -8,7 +8,6 @@ import java.util.List;
  * @author rap
  */
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(name = "UNIQUE_VALUE", columnNames = "VALUE"))
 public class Process {
 
 	@Id
@@ -25,7 +24,6 @@ public class Process {
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private User user;
 
-	@Column(unique = true)
 	private String value;
 
 	public String getValue() {

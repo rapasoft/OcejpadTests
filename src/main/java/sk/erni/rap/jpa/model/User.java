@@ -64,7 +64,8 @@ public class User {
 	@ElementCollection
 	@CollectionTable(name = "USER_ROLE")
 	@Column(name = "VALID_TO", nullable = true)
-	@MapKeyJoinColumn(name = "ROLE_ID")
+	@MapKeyJoinColumn(name = "ROLE_ID", referencedColumnName = "ID")
+	@Temporal(TemporalType.DATE)
 	private Map<Role, Date> roleValidToDates = new HashMap<>();
 
 	public User(String name, String surname, String dateOfBirth) {
@@ -75,7 +76,7 @@ public class User {
 
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "USER_ID")
-	@MapKey(name = "value")
+	@MapKey
 	private Map<String, Process> processes = new HashMap<>();
 
 	public User() {
