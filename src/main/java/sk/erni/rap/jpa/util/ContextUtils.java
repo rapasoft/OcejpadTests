@@ -8,11 +8,18 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.transaction.UserTransaction;
+import java.util.Properties;
 
 /**
  * @author rap
  */
 public class ContextUtils {
+
+	private static String getModuleName() {
+		Properties properties = System.getProperties();
+		String[] path = properties.getProperty("openejb.home").split("\\\\|/");
+		return path[path.length - 1];
+	}
 
 	public static Context createContext() {
 		return EJBContainer.createEJBContainer().getContext();
@@ -21,7 +28,7 @@ public class ContextUtils {
 	@SuppressWarnings("unchecked")
 	public static <T> T lookup(Context context, Class<T> clazz) {
 		try {
-			return (T) context.lookup("java:global/JpaTest/" + clazz.getSimpleName());
+			return (T) context.lookup("java:global/" + getModuleName() + "/" + clazz.getSimpleName());
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
